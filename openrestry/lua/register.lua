@@ -19,7 +19,7 @@ end
 
 local salt = "abcd"
 
-local succ, err, forcible = users_table:set(user_id, ngx.md5(user_id .. password .. salt))
+local succ, err, forcible = users_table:set(user_id, ngx.md5(user_id .. password .. salt), 3600)
 
 if succ then
     ngx.say(json_encode({code=200, msg="注册成功."}))
