@@ -1,4 +1,4 @@
-local json_encode = require "cjson.safe.encode"
+local json_encode = require("cjson.safe").encode
 
 local users_table = ngx.shared.users
 local json_data = ngx.ctx.json_data
@@ -19,12 +19,12 @@ end
 
 local salt = "abcd"
 
-local succ, err, forcible = users_table:set(user_id, {salt=salt, password=ngx.md5(password .. salt)})
+local succ, err, forcible = users_table:set(user_id, ngx.md5(user_id .. password .. salt))
 
 if succ then
     ngx.say(json_encode({code=200, msg="注册成功."}))
     return
 else
-    ngx.say(json_encode({code=500, msg="注册失败." .. err}))
+    ngx.say(json_encode({code=500, msg="注册失败. " .. err}))
     return
 end

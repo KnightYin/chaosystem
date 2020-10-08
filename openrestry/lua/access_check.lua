@@ -6,6 +6,9 @@ local data = ngx.req.get_body_data()
 
 local json_data = json_decode(data)
 
+--- 后续使用
+ngx.ctx.json_data = json_data
+
 if not json_data then
     ngx.exit(ngx.HTTP_BAD_REQUEST)
 end
@@ -21,6 +24,3 @@ local token, _ = tokens:get(user_id)
 if token == nil or token ~= json_data["token"] then
     ngx.exit(ngx.HTTP_UNAUTHORIZED)
 end
-
---- 后续使用
-ngx.ctx.json_data = json_data
